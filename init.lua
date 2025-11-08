@@ -1,0 +1,5 @@
+require("core.lsp")
+require("core.basic")
+require("core.global")
+require("core.keymap")
+require("core.lazy-config")
