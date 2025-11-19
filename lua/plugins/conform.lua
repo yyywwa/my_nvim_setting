@@ -15,6 +15,7 @@ return {
         lua = { "stylua" }, -- Lua 文件使用 stylua
         c = { "clang-format" },
         cpp = { "clang-format" },
+        go = { "goimports" },
       },
       formatters = {
         stylua = {
