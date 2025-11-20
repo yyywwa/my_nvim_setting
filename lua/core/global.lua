@@ -11,24 +11,27 @@ local function generate_compile_commands()
   -- ******** 重点修改部分：将构建目录名改为 "build" ********
   local build_dir = "build"
   local json_file = build_dir .. "/compile_commands.json"
+
   -- 2. 构建 Shell 命令：清理，生成，并创建软链接
   local cmd = string.format(
     [[
-        echo "--- 1. 清理并创建构建目录： %s" &&
-        rm -rf %s &&
-        mkdir -p %s &&
-        
-        echo "--- 2. 运行 CMake 并生成 JSON 文件..." &&
-        cd %s &&
-        # '..' 是指向上层目录的 CMakeLists.txt
-        # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 是关键
-        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON .. &&
-        echo "--- 3. 链接 JSON 文件到根目录..." &&
-        cd .. &&
-        rm -f compile_commands.json &&
-        ln -s %s compile_commands.json &&
-        echo "✅ 成功生成 compile_commands.json, 请重启 Language Server"
-    ]],
+            echo "--- 1. 清理并创建构建目录： %s" &&
+            rm -rf %s &&
+            mkdir -p %s &&
+            
+            echo "--- 2. 运行 CMake 并生成 JSON 文件 (使用 CLang)..." &&
+            cd %s &&
+            # '..' 是指向上层目录的 CMakeLists.txt
+            # -DCMAKE_EXPORT_COMPILE_COMMANDS=ON 是关键
+            # 🚀 重点修改：添加了指定 Clang 的配置
+            cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -D CMAKE_C_COMPILER=clang -D CMAKE_CXX_COMPILER=clang++ .. && 
+            
+            echo "--- 3. 链接 JSON 文件到根目录..." &&
+            cd .. &&
+            rm -f compile_commands.json &&
+            ln -s %s compile_commands.json &&
+            echo "✅ 成功生成 compile_commands.json, 请重启 Language Server"
+        ]],
     build_dir,
     build_dir,
     build_dir,
