@@ -11,11 +11,6 @@ keymap("n", "sh", ":sp<CR>", opts)
 keymap("n", "sc", "<C-w>c", opts)
 -- 关闭其他
 keymap("n", "so", "<C-w>o", opts)
--- Alt + hjkl  窗口之间跳转
--- keymap("n", "<leader>h", "w | <C-w>h", opts)
--- keymap("n", "<leader>j", "w | <C-w>j", opts)
--- keymap("n", "<leader>k", "w | <C-w>k", opts)
--- keymap("n", "<leader>l", "w | <C-w>l", opts)
 keymap("n", "<leader>h", "<C-w>h", opts)
 keymap("n", "<leader>j", "<C-w>j", opts)
 keymap("n", "<leader>k", "<C-w>k", opts)

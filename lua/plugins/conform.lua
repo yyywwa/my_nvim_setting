@@ -16,6 +16,7 @@ return {
         c = { "clang-format" },
         cpp = { "clang-format" },
         go = { "goimports" },
+        rust = { "rustfmt" },
       },
       formatters = {
         stylua = {

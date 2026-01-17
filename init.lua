@@ -4,7 +4,9 @@ local current_path = vim.env.PATH
 local mason_bin_path = vim.fn.stdpath("data") .. "/mason/bin"
 -- 将新路径添加到当前 PATH 的前面 (这样它有更高的优先级)
 vim.env.PATH = mason_bin_path .. ":" .. current_path
-
+vim.env.LANG = "C"
+vim.lsp.set_log_level("error")
+vim.opt.termguicolors = true
 require("core.lsp")
 require("core.basic")
 require("core.global")

@@ -17,8 +17,8 @@ return {
       ["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
       ["<CR>"] = { "accept", "fallback" },
       ["<Esc>"] = { "hide", "fallback" },
-      ["<PageUp>"] = { "scroll_documentation_up", "fallback" },
-      ["<PageDown>"] = { "scroll_documentation_down", "fallback" },
+      ["<C-k>"] = { "scroll_documentation_up", "fallback" },
+      ["<C-j>"] = { "scroll_documentation_down", "fallback" },
     },
     sources = {
       default = {

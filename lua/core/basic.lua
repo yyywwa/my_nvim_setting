@@ -76,6 +76,10 @@ vim.o.showtabline = 2
 vim.o.showmode = false
 vim.opt.clipboard = "unnamedplus"
 
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+-- 默认进入文件时不折叠
+vim.opt.foldlevel = 99
 ---------------------------------nvim-tree----------------------------------------------
 -- 在 init.lua 的一开始就禁用 netrw
 vim.g.loaded_netrw = 1

@@ -16,6 +16,6 @@ return {
     { "<leader>lR", ":Lspsaga finder<CR>" },
     { "<leader>ln", ":Lspsaga diagnostic_jump_next<CR>" },
     { "<leader>lp", ":Lspsaga diagnostic_jump_prev<CR>" },
-    { "<leader>cj", ":lua vim.g.generate_compile_commands()<CR>", desc = "Generate compile_commands.json" },
+    { "<leader>cj", ":lua vim.g.generate_compile_commands()", desc = "Generate compile_commands.json" },
   },
 }
