@@ -8,57 +8,45 @@ return {
 
   config = function()
     local code = require("codecompanion")
+
+    local function sf_adapter(model_name)
+      return require("codecompanion.adapters").extend("openai", {
+        name = model_name,
+        url = "https://api.siliconflow.cn/v1/chat/completions",
+        env = {
+          api_key = "SILICONFLOW_API_KEY", -- 插件会自动从环境变量读取
+        },
+        schema = {
+          model = { default = model_name },
+          temperature = { default = 0.2 },
+          max_tokens = { default = 2048 },
+          top_p = { default = 0.95 },
+          frequency_penalty = { default = 0 },
+          presence_penalty = { default = 0 },
+        },
+      })
+    end
+
     code.setup({
-      -- ================= Adapter =================
       adapters = {
         http = {
           opts = {
             show_defaults = true,
-            show_model_choices = true, -- ✅ 允许手动切 choice
+            show_model_choices = true,
           },
-          deepseek = function()
-            return require("codecompanion.adapters").extend("deepseek", {
-              name = "deepseek",
-              env = {
-                api_key = function()
-                  return os.getenv("DEEPSEEK_API_KEY")
-                end,
-              },
-              opts = {
-                temperature = 0.7,
-                max_tokens = 2048,
-                top_p = 0.95,
-                frequency_penalty = 0,
-                presence_penalty = 0,
-              },
-              schema = {
-                model = {
-                  -- ===== 默认模型（不思考，省 token）=====
-                  default = "deepseek-chat",
-                  -- ===== 可选模型 =====
-                  -- choices = {
-                  --   "deepseek-chat",
-                  --   "deepseek-coder",
-                  --   ["deepseek-reasoner"] = {
-                  --     opts = { can_reason = true }, -- ✅ 明确是思考型
-                  --   },
-                  -- },
-                },
-              },
-            })
-          end,
+          deepseek_sf_free = sf_adapter("deepseek-ai/DeepSeek-R1-0528-Qwen3-8B"),
+          deepseek_sf = sf_adapter("deepseek-ai/DeepSeek-V3"),
         },
       },
       -- ================= Interactions =================
-      interactions = {
+      strategies = {
         chat = {
-          adapter = "deepseek", -- 默认 chat → deepseek-chat
+          adapter = "deepseek_sf_free",
         },
         inline = {
-          adapter = "deepseek", -- inline 也可手动切 coder
+          adapter = "deepseek_sf",
         },
       },
-      -- ================= UI =================
       display = {
         chat = {
           show_settings = true,
@@ -68,10 +56,6 @@ return {
             width = 0.35,
           },
         },
-      },
-      -- ================= Global =================
-      opts = {
-        language = "Chinese",
       },
     })
   end,
